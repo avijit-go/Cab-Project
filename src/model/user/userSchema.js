@@ -23,13 +23,10 @@ const UserSchema = mongoose.Schema(
     password: {
       type: String,
       trim: true,
-      required: [true, "User password is required"],
-      minlength: [3, "Minimum 3 characters are required"],
     },
     phone: {
       type: Number,
       trim: true,
-      required: [true, "User phone number is required"],
     },
     email_otp: { type: Number, default: 0 },
     email_verify: { type: Boolean, default: false },

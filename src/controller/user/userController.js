@@ -3,6 +3,7 @@
 const mongoose = require("mongoose");
 const User = require("../../model/user/userSchema");
 const UserWallet = require("../../model/userWallet/userWallet");
+const BookCab = require("../../model/bookCab/bookCabSchema")
 const createError = require("http-errors");
 const {
   hashPassword,
@@ -891,6 +892,23 @@ class UserController {
       return res.status(200).json({statusCode: 200, data})
     }
     catch(error) {
+      next(error)
+    }
+  }
+
+  async getProfileBookingHistory(req, res, next) {
+    try {
+      if(!req.params.id) {
+        throw createError.BadRequest({message: "Profile id not found"});
+      }
+      const bookingData = await BookCab.find({user: req.params.id})
+      .populate({ path: "car", select: "name description image" })
+      .populate({ path: "user", select: "name email phone" })
+      .populate({ path: "driver", select: "name email phone profile_image" })
+      .sort({createdAt: -1})
+      
+      return res.status(200).json({message: "Get profile booking history", status: 200, history: bookingData})
+    } catch (error) {
       next(error)
     }
   }

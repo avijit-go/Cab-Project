@@ -20,7 +20,8 @@ const {
   deleteProfile,
   deleteProfileStatus,
   updateUserProfile,
-  getWalletDetails
+  getWalletDetails,
+  getProfileBookingHistory
 } = require("../../controller/user/userController");
 const authentication = require("../../middleware/authentication");
 const verifyUserEmail = require("../../middleware/verifyUserEmail");
@@ -197,6 +198,9 @@ router.put("/delete-profile-status/:id", verifyAdmin, deleteProfileStatus);
 
 router.put("/update-profile", authentication, updateUserProfile);
 
-
+/**
+ * GET profile booking history
+ */
+router.get("/profile-booking-history/:id", authentication, getProfileBookingHistory);
 
 module.exports = router;
